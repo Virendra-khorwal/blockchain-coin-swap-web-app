@@ -12,7 +12,7 @@ const Swap = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <div className="bg-primary-color px-4 py-2 rounded mb-10 text-2xl font-semibold tracking-wide text-center">
+        <div className="bg-dark-secondary border border-primary-color border-2 px-4 py-4 rounded mb-10 text-2xl font-semibold tracking-wide text-center text-primary-color">
           <p>Swap Your Crypto Here</p>
         </div>
         <Card>
