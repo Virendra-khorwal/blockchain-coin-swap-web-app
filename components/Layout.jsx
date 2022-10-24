@@ -1,12 +1,17 @@
+import Navbar from "./Navbar";
+
 const { default: Sidebar } = require("./Sidebar");
 
 const Layout = ({ children }) => {
   return (
-    <div className="grid grid-cols-9">
+    <div className="flex h-screen bg-dark-primary">
       <div className="">
         <Sidebar />
       </div>
-      <div className="col-span-8">{children}</div>
+      <div className="flex-1 flex flex-col">
+        <Navbar />
+        <div className="flex-1 flex">{children}</div>
+      </div>
     </div>
   );
 };
