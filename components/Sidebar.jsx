@@ -19,59 +19,70 @@ const Sidebar = () => {
       </div>
       <div className="text-3xl">
         <ul className="flex flex-col gap-y-10 ">
-          <li
-            className={`${
-              active === "/"
-                ? "bg-primary-color"
-                : "hover:text-primary-color active:bg-primary-color active:text-white"
-            } p-3 rounded cursor-pointer `}
-          >
+          <li>
             <Link href="/">
-              <RiLayoutGridFill />
+              <div
+                className={`${
+                  active === "/"
+                    ? "bg-primary-color"
+                    : "hover:text-primary-color active:bg-primary-color active:text-white"
+                } p-3 rounded cursor-pointer `}
+              >
+                <RiLayoutGridFill />
+              </div>
             </Link>
           </li>
-          <li
-            className={`${
-              active === "/swap"
-                ? "bg-primary-color"
-                : "hover:text-primary-color active:bg-primary-color active:text-white"
-            } p-3 rounded cursor-pointer`}
-          >
+          <li>
             <Link href="/swap">
-              <AiFillSignal />
+              <div
+                className={`${
+                  active === "/swap"
+                    ? "bg-primary-color"
+                    : "hover:text-primary-color active:bg-primary-color active:text-white"
+                } p-3 rounded cursor-pointer`}
+              >
+                <AiFillSignal />
+              </div>
             </Link>
           </li>
-          <li
-            className={`${
-              active === "/stat"
-                ? "bg-primary-color"
-                : "hover:text-primary-color active:bg-primary-color active:text-white"
-            } p-3 rounded cursor-pointer`}
-          >
-            <Link href="#">
-              <AiOutlineAreaChart />
+          <li>
+            <Link href="/stat">
+              <div
+                className={`${
+                  active === "/stat"
+                    ? "bg-primary-color"
+                    : "hover:text-primary-color active:bg-primary-color active:text-white"
+                } p-3 rounded cursor-pointer`}
+              >
+                <AiOutlineAreaChart />
+              </div>
             </Link>
           </li>
-          <li
-            className={`${
-              active === "/wallet"
-                ? "bg-primary-color"
-                : "hover:text-primary-color active:bg-primary-color active:text-white"
-            } p-3 rounded cursor-pointer`}
-          >
+          <li>
             <Link href="/wallet">
-              <IoIosWallet />
+              <div
+                className={`${
+                  active === "/wallet"
+                    ? "bg-primary-color"
+                    : "hover:text-primary-color active:bg-primary-color active:text-white"
+                } p-3 rounded cursor-pointer`}
+              >
+                <IoIosWallet />
+              </div>
             </Link>
           </li>
-          <li
-            className={`${
-              active === "/rewards"
-                ? "bg-primary-color"
-                : "hover:text-primary-color active:bg-primary-color active:text-white"
-            } p-3 rounded cursor-pointer `}
-          >
-            <Link href="#">
-              <IoRibbon />
+
+          <li>
+            <Link href="/rewards">
+              <div
+                className={`${
+                  active === "/rewards"
+                    ? "bg-primary-color"
+                    : "hover:text-primary-color active:bg-primary-color active:text-white"
+                } p-3 rounded cursor-pointer `}
+              >
+                <IoRibbon />
+              </div>
             </Link>
           </li>
         </ul>

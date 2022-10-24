@@ -1,8 +1,13 @@
 
 const Button = ({children, onClick}) => {
-    return <button onClick={onClick} className="flex items-center bg-primary-color p-3 rounded">
+    return (
+      <button
+        onClick={onClick}
+        className="flex items-center bg-primary-color p-3 rounded"
+      >
         {children}
-    </button>
+      </button>
+    );
 }
 
 export default Button
