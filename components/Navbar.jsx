@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext} from "react";
 
 import { HiCreditCard } from "react-icons/hi";
 import { IoMdNotifications, IoMdPerson } from "react-icons/io";
+import { TransactionContext } from "../context/TransactionContext";
 
 const Navbar = () => {
-    const [walletConnected, setWalletConnected] = useState(false);
+    const {connectWallet, currentAccount} = useContext(TransactionContext);
+    console.log(currentAccount)
     return (
       <div className="py-6 px-10 flex justify-between">
         <div>
@@ -14,17 +16,20 @@ const Navbar = () => {
           />
         </div>
         <div className="text-white flex gap-x-10">
-          {walletConnected ? (
-            <div className="bg-dark-secondary rounded">
+          {currentAccount ? (
+            <button className="bg-dark-secondary rounded flex items-center px-4 gap-x-3 cursor-pointer">
               <HiCreditCard />
-              <p>9.99 ETH</p>
-            </div>
+              <p className="truncate w-16">{currentAccount}</p>
+            </button>
           ) : (
-            <div className="hover:bg-dark-light bg-dark-secondary rounded">
+            <button
+              className="hover:bg-dark-light bg-dark-secondary rounded"
+              onClick={() => connectWallet()}
+            >
               <p className="text-primary-color  py-2 px-4 cursor-pointer">
                 Connect Wallet
               </p>
-            </div>
+            </button>
           )}
           <div className="py-2 px-4 flex items-center bg-dark-secondary rounded cursor-pointer hover:bg-dark-light">
             <IoMdNotifications />
