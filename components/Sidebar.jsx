@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { RiLayoutGridFill } from "react-icons/ri";
 import { AiFillSignal, AiOutlineAreaChart, BsBack } from "react-icons/ai";
-import { IoIosWallet, IoMdSettings, } from "react-icons/io";
+import { IoIosWallet, IoMdSettings } from "react-icons/io";
 import { IoRibbon, IoLogInOutline, IoLogOutOutline } from "react-icons/io5";
 
-import logo from '../public/logo.png'
+import logo from "../public/logo.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
@@ -26,7 +26,8 @@ const Sidebar = () => {
                   active === "/"
                     ? "bg-primary-color"
                     : "hover:text-primary-color active:bg-primary-color active:text-white"
-                } p-3 rounded cursor-pointer `}
+                } p-3 rounded cursor-pointer tooltip tooltip-right`}
+                data-tip="dashboard"
               >
                 <RiLayoutGridFill />
               </div>
@@ -39,7 +40,8 @@ const Sidebar = () => {
                   active === "/swap"
                     ? "bg-primary-color"
                     : "hover:text-primary-color active:bg-primary-color active:text-white"
-                } p-3 rounded cursor-pointer`}
+                } p-3 rounded cursor-pointer tooltip tooltip-right`}
+                data-tip="swap"
               >
                 <AiFillSignal />
               </div>
@@ -52,7 +54,8 @@ const Sidebar = () => {
                   active === "/stat"
                     ? "bg-primary-color"
                     : "hover:text-primary-color active:bg-primary-color active:text-white"
-                } p-3 rounded cursor-pointer`}
+                } p-3 rounded cursor-pointer tooltip tooltip-right`}
+                data-tip="stat"
               >
                 <AiOutlineAreaChart />
               </div>
@@ -65,7 +68,8 @@ const Sidebar = () => {
                   active === "/wallet"
                     ? "bg-primary-color"
                     : "hover:text-primary-color active:bg-primary-color active:text-white"
-                } p-3 rounded cursor-pointer`}
+                } p-3 rounded cursor-pointer tooltip tooltip-right`}
+                data-tip="wallet"
               >
                 <IoIosWallet />
               </div>
@@ -79,7 +83,8 @@ const Sidebar = () => {
                   active === "/rewards"
                     ? "bg-primary-color"
                     : "hover:text-primary-color active:bg-primary-color active:text-white"
-                } p-3 rounded cursor-pointer `}
+                } p-3 rounded cursor-pointer tooltip tooltip-right`}
+                data-tip="rewards"
               >
                 <IoRibbon />
               </div>
@@ -90,14 +95,18 @@ const Sidebar = () => {
       <div className="text-3xl">
         <ul className="flex flex-col gap-y-10">
           <li className="p-3 rounded cursor-pointer">
-            <Link href="#">
-              <IoMdSettings />
-            </Link>
+            <div className="tooltip tooltip-right" data-tip="setting">
+              <Link href="#">
+                <IoMdSettings />
+              </Link>
+            </div>
           </li>
           <li className="p-3 rounded cursor-pointer bg-dark-light">
-            <Link href="#">
-              <IoLogInOutline />
-            </Link>
+            <div className="tooltip tooltip-right" data-tip="login">
+              <Link href="#">
+                <IoLogInOutline />
+              </Link>
+            </div>
           </li>
         </ul>
       </div>

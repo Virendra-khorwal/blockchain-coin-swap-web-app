@@ -17,5 +17,5 @@ module.exports = {
       'yellow': '##eab308',
     }
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 }
