@@ -3,6 +3,7 @@ import { useContext} from "react";
 import { HiCreditCard } from "react-icons/hi";
 import { IoMdNotifications, IoMdPerson } from "react-icons/io";
 import { TransactionContext } from "../context/TransactionContext";
+import WalletModal from "./WalletModal";
 
 const Navbar = () => {
     const {connectWallet, currentAccount} = useContext(TransactionContext);
@@ -22,14 +23,7 @@ const Navbar = () => {
               <p className="truncate w-16">{currentAccount}</p>
             </button>
           ) : (
-            <button
-              className="hover:bg-dark-light bg-dark-secondary rounded"
-              onClick={() => connectWallet()}
-            >
-              <p className="text-primary-color  py-2 px-4 cursor-pointer">
-                Connect Wallet
-              </p>
-            </button>
+            <WalletModal />
           )}
           <div className="py-2 px-4 flex items-center bg-dark-secondary rounded cursor-pointer hover:bg-dark-light">
             <IoMdNotifications />
