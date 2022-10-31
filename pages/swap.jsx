@@ -2,8 +2,65 @@ import Card from "../components/Card";
 import Head from "next/head";
 import { MdSwapVert } from "react-icons/md";
 import Button from "../util/Button";
+import { getSession, signOut } from "next-auth/react";
+import Moralis from "moralis";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useSendTransaction } from "wagmi";
+import { TransactionContext } from "../context/TransactionContext";
+import { useContext } from "react";
 
 const Swap = () => {
+const { connectWallet, currentAccount } = useContext(TransactionContext);
+  const [fromToken] = useState("0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE");
+  const [toToken, setToToken] = useState(
+    "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
+  ); //USDC ERC20 Contract
+  const [value, setValue] = useState("1000000000000000000");
+  const [valueExchanged, setValueExchanged] = useState("");
+  const [valueExchangedDecimals, setValueExchangedDecimals] = useState(1e18);
+  const [to, setTo] = useState("");
+  const [txData, setTxData] = useState("");
+
+  
+
+  // const { data, isLoading, isSuccess, sendTransaction } = useSendTransaction({
+  //   request: {
+  //     from: currentAccount,
+  //     to: String(to),
+  //     data: String(txData),
+  //     value: String(value),
+  //   },
+  // });
+
+  function changeToToken(e) {
+    setToToken(e.target.value);
+    setValueExchanged("");
+  }
+
+  function changeValue(e) {
+    setValue(e.target.value * 1e18);
+    setValueExchanged("");
+  }
+
+  
+
+  useEffect(() => {
+    async function get1inchSwap() {
+      const tx = await axios.get(
+        `https://api.1inch.io/v4.0/137/swap?fromTokenAddress=${fromToken}&toTokenAddress=${toToken}&amount=${value}&fromAddress=${currentAccount}&slippage=5`
+      );
+      console.log(tx.data);
+      setTo(tx.data.tx.to);
+      setTxData(tx.data.tx.data);
+      setValueExchangedDecimals(Number(`1E${tx.data.toToken.decimals}`));
+      setValueExchanged(tx.data.toTokenAmount);
+    }
+    get1inchSwap();
+  }, [value, toToken, currentAccount, fromToken])
+
+  // FIX The error code 400 axios request failed
+
   return (
     <div className="flex flex-1 items-center justify-center flex-col text-white">
       <Head>
@@ -18,21 +75,47 @@ const Swap = () => {
         <Card>
           <div className="flex flex-col items-center gap-y-4">
             <div className="bg-dark-primary rounded px-4 py-2">
-              <input className="bg-dark-primary text-xl py-3 px-4 focus:outline-none" />
+              <input
+                className="bg-dark-primary text-xl py-3 px-4 focus:outline-none"
+                type="number"
+                placeholder="0.0"
+                min="0"
+                step="0.01"
+                onChange={(e) => changeValue(e)}
+              />
               <select className="bg-dark-light rounded p-2">
-                <option className="hover:bg-primary-color rounded p-4">
-                  Testing
+                <option value="0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619">
+                  WETH
                 </option>
-                {/* ADD Remove this select block and add custom menu where user can search crypto */}
+                <option value="0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174">
+                  USDC
+                </option>
               </select>
             </div>
             <div className="p-2 text-xl bg-primary-color rounded">
               <MdSwapVert />
             </div>
             <div className="bg-dark-primary rounded px-4 py-2">
-              <input className="bg-dark-primary text-xl py-3 px-4 focus:outline-none" />
+              <input
+                className="bg-dark-primary text-xl py-3 px-4 focus:outline-none"
+                type="number"
+                placeholder="0.0"
+                min="0"
+                step="0.01"
+                value={
+                  !valueExchanged
+                    ? ""
+                    : (valueExchanged / valueExchangedDecimals).toFixed(5)
+                }
+                disabled={true}
+              />
               <select className="bg-dark-light rounded p-2">
-                <option>Testing</option>
+                <option value="0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619">
+                  WETH
+                </option>
+                <option value="0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174">
+                  USDC
+                </option>
               </select>
             </div>
             <div className="w-full flex flex-col items-stretch">

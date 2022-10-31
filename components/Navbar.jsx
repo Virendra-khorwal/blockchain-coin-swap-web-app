@@ -1,13 +1,14 @@
 import { useContext} from "react";
-
 import { HiCreditCard } from "react-icons/hi";
 import { IoMdNotifications, IoMdPerson } from "react-icons/io";
 import { TransactionContext } from "../context/TransactionContext";
 import WalletModal from "./WalletModal";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
     const {connectWallet, currentAccount} = useContext(TransactionContext);
-    console.log(currentAccount)
+      const router = useRouter();
+
     return (
       <div className="py-6 px-10 flex justify-between">
         <div>
@@ -18,7 +19,10 @@ const Navbar = () => {
         </div>
         <div className="text-white flex gap-x-10">
           {currentAccount ? (
-            <button className="bg-dark-secondary rounded flex items-center px-4 gap-x-3 cursor-pointer">
+            <button
+              className="bg-dark-secondary rounded flex items-center px-4 gap-x-3 cursor-pointer"
+              onClick={() => router.push("/wallet")}
+            >
               <HiCreditCard />
               <p className="truncate w-16">{currentAccount}</p>
             </button>
