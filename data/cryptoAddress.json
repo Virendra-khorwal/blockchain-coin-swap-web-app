@@ -1,7 +1,4 @@
 {
-    "etherMainnet": {
-        "eth": "0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419"
-    },
     "avalancheMainnet": {
         "avax": "0x0a77230d17318075983913bc2145db16c7366156",
         "eth": "0x976b3d034e162d8bd72d6b9c989d545b839003b0",
@@ -47,7 +44,7 @@
         "xau": "0x1f41ef93dece881ad0b98082b2d44d3f6f0c515b",
         "xava": "0x4cf57dc9028187b9daaf773c8eca941036989238",
         "yfi": "0x28043b1ebd41860b93ec1f1ec19560760b6db556",
-        "zrx": "0xc07cdf938aa113741fb639bf39699926123fb58b",
+        "zrx": "0xc07cdf938aa113741fb639bf39699926123fb58b"
 
     },
     "etherMainnet": {
@@ -212,7 +209,7 @@
         "chr":"0x1f771b2b1f3c3db6c7a1d5f38961a49cecd116da",
         "cream":"0xa12fc27a873cf114e6d8bbaf8bd9b8ac56110b39",
         "crv":"0x2e1c3b6fcae47b20dd343d9354f7b1140a1e6b27",
-        "dego":"0x39f1275366d130eb677d4f47d40f9296b62d877a",
+        "dego":"0x39f1275366d130eb677d4f47d40f9296b62d877a"
 
     }
 
