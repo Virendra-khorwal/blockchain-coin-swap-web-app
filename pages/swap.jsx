@@ -21,7 +21,8 @@ const { connectWallet, currentAccount } = useContext(TransactionContext);
   const [valueExchangedDecimals, setValueExchangedDecimals] = useState(1e18);
   const [to, setTo] = useState("");
   const [txData, setTxData] = useState("");
-
+  const [option1, setOption1] = useState("Select");
+  const [option2, setOption2] = useState("Select");
   
 
   // const { data, isLoading, isSuccess, sendTransaction } = useSendTransaction({
@@ -45,19 +46,19 @@ const { connectWallet, currentAccount } = useContext(TransactionContext);
 
   
 
-  useEffect(() => {
-    async function get1inchSwap() {
-      const tx = await axios.get(
-        `https://api.1inch.io/v4.0/137/swap?fromTokenAddress=${fromToken}&toTokenAddress=${toToken}&amount=${value}&fromAddress=${currentAccount}&slippage=5`
-      );
-      console.log(tx.data);
-      setTo(tx.data.tx.to);
-      setTxData(tx.data.tx.data);
-      setValueExchangedDecimals(Number(`1E${tx.data.toToken.decimals}`));
-      setValueExchanged(tx.data.toTokenAmount);
-    }
-    get1inchSwap();
-  }, [value, toToken, currentAccount, fromToken])
+  // useEffect(() => {
+  //   async function get1inchSwap() {
+  //     const tx = await axios.get(
+  //       `https://api.1inch.io/v4.0/137/swap?fromTokenAddress=${fromToken}&toTokenAddress=${toToken}&amount=${value}&fromAddress=${currentAccount}&slippage=5`
+  //     );
+  //     console.log(tx.data);
+  //     setTo(tx.data.tx.to);
+  //     setTxData(tx.data.tx.data);
+  //     setValueExchangedDecimals(Number(`1E${tx.data.toToken.decimals}`));
+  //     setValueExchanged(tx.data.toTokenAmount);
+  //   }
+  //   get1inchSwap();
+  // }, [value, toToken, currentAccount, fromToken])
 
   // FIX The error code 400 axios request failed
 
@@ -83,14 +84,32 @@ const { connectWallet, currentAccount } = useContext(TransactionContext);
                 step="0.01"
                 onChange={(e) => changeValue(e)}
               />
-              <select className="bg-dark-light rounded p-2">
-                <option value="0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619">
-                  WETH
-                </option>
-                <option value="0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174">
-                  USDC
-                </option>
-              </select>
+              <div className="dropdown dropdown-bottom">
+                <label tabIndex={0} className="btn m-1">
+                  {option1}
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <a
+                      onClick={() => setOption1("WETH")}
+                      value="0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
+                    >
+                      WETH
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      onClick={() => setOption1("USDC")}
+                      value="0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
+                    >
+                      USDC
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
             <div className="p-2 text-xl bg-primary-color rounded">
               <MdSwapVert />
@@ -109,14 +128,32 @@ const { connectWallet, currentAccount } = useContext(TransactionContext);
                 }
                 disabled={true}
               />
-              <select className="bg-dark-light rounded p-2">
-                <option value="0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619">
-                  WETH
-                </option>
-                <option value="0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174">
-                  USDC
-                </option>
-              </select>
+              <div className="dropdown dropdown-bottom">
+                <label tabIndex={0} className="btn m-1">
+                  {option2}
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <a
+                      onClick={() => setOption2("WETH")}
+                      value="0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
+                    >
+                      WETH
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      onClick={() => setOption2("USDC")}
+                      value="0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
+                    >
+                      USDC
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
             <div className="w-full flex flex-col items-stretch">
               <Button>
