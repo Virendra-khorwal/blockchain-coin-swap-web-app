@@ -9,30 +9,21 @@ import axios from "axios";
 import { useSendTransaction } from "wagmi";
 import { TransactionContext } from "../context/TransactionContext";
 import { useContext } from "react";
+import TokenModal from "../components/TokenModal";
+import Web3 from 'web3'
+import erc20ABI from '../util/abi.json'
+
+const qs = require("qs");
+const BigNumber = require('big-number')
 
 const Swap = () => {
-const { connectWallet, currentAccount } = useContext(TransactionContext);
-  const [fromToken] = useState("0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE");
-  const [toToken, setToToken] = useState(
-    "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
-  ); //USDC ERC20 Contract
-  const [value, setValue] = useState("1000000000000000000");
+  const { connectWallet, currentAccount } = useContext(TransactionContext);
+
+  const [value, setValue] = useState();
   const [valueExchanged, setValueExchanged] = useState("");
-  const [valueExchangedDecimals, setValueExchangedDecimals] = useState(1e18);
-  const [to, setTo] = useState("");
-  const [txData, setTxData] = useState("");
   const [option1, setOption1] = useState("Select");
   const [option2, setOption2] = useState("Select");
-  
-
-  // const { data, isLoading, isSuccess, sendTransaction } = useSendTransaction({
-  //   request: {
-  //     from: currentAccount,
-  //     to: String(to),
-  //     data: String(txData),
-  //     value: String(value),
-  //   },
-  // });
+  const [estimatedGasValue, setEstimatedGasValue] = useState();
 
   function changeToToken(e) {
     setToToken(e.target.value);
@@ -44,23 +35,67 @@ const { connectWallet, currentAccount } = useContext(TransactionContext);
     setValueExchanged("");
   }
 
-  
+  const getPrice = async () => {
+    if (!option1 || !option2 || !value) return;
+    let amount = Number(value * 10 ** option1.decimals);
+    const params = {
+      sellToken: option1.address,
+      buyToken: option2.address,
+      sellAmount: amount,
+    };
+    const response = await fetch(
+      `https://api.0x.org/swap/v1/price?${qs.stringfy(params)}`
+    );
 
-  // useEffect(() => {
-  //   async function get1inchSwap() {
-  //     const tx = await axios.get(
-  //       `https://api.1inch.io/v4.0/137/swap?fromTokenAddress=${fromToken}&toTokenAddress=${toToken}&amount=${value}&fromAddress=${currentAccount}&slippage=5`
-  //     );
-  //     console.log(tx.data);
-  //     setTo(tx.data.tx.to);
-  //     setTxData(tx.data.tx.data);
-  //     setValueExchangedDecimals(Number(`1E${tx.data.toToken.decimals}`));
-  //     setValueExchanged(tx.data.toTokenAmount);
-  //   }
-  //   get1inchSwap();
-  // }, [value, toToken, currentAccount, fromToken])
+    const swapPriceJSON = await response.json();
 
-  // FIX The error code 400 axios request failed
+    setValueExchanged(swapPriceJSON.buyAmount / 10 ** option2.decimals);
+    setEstimatedGasValue(swapPriceJSON.estimatedGas);
+  };
+
+  const getQuote = async (account) => {
+    if (!option1 || !option2 || !value) return;
+    let amount = Number(value * 10 ** option1.decimals);
+    const params = {
+      sellToken: option1.address,
+      buyToken: option2.address,
+      sellAmount: amount,
+      takerAddress: account,
+    };
+    const response = await fetch(
+      `https://api.0x.org/swap/v1/quote?${qs.stringfy(params)}`
+    );
+
+    const swapQuoteJSON = await response.json();
+
+    setValueExchanged(swapQuoteJSON.buyAmount / 10 ** option2.decimals);
+    setEstimatedGasValue(swapQuoteJSON.estimatedGas);
+
+    return swapQuoteJSON;
+  };
+
+  const trySwap = async () => {
+    let takerAddress = currentAccount;
+    const swapQuoteJSON = await getQuote(takerAddress);
+
+    const web3 = new Web3(Web3.givenProvider);
+    const fromTokenAddress = option1.address
+
+    const ERC20TokenContract = new web3.eth.Contract(erc20ABI, fromTokenAddress)
+    const maxApproval = new BigNumber(2).pow(256).minus(1);
+    ERC20TokenContract.methods.approve(
+      swapQuoteJSON.allowanceTarget,
+      maxApproval,
+    )
+    .send({from: takerAddress})
+    .then( tx => {
+      console.log("tx: ", tx)
+    })
+
+    const receipt = web3.eth.sendTransaction(swapQuoteJSON)
+    console.log(receipt)
+
+  };
 
   return (
     <div className="flex flex-1 items-center justify-center flex-col text-white">
@@ -75,7 +110,7 @@ const { connectWallet, currentAccount } = useContext(TransactionContext);
         </div>
         <Card>
           <div className="flex flex-col items-center gap-y-4">
-            <div className="bg-dark-primary rounded px-4 py-2">
+            <div className="bg-dark-primary rounded px-4 py-2 flex">
               <input
                 className="bg-dark-primary text-xl py-3 px-4 focus:outline-none"
                 type="number"
@@ -84,80 +119,32 @@ const { connectWallet, currentAccount } = useContext(TransactionContext);
                 step="0.01"
                 onChange={(e) => changeValue(e)}
               />
-              <div className="dropdown dropdown-bottom">
-                <label tabIndex={0} className="btn m-1">
-                  {option1}
-                </label>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-                >
-                  <li>
-                    <a
-                      onClick={() => setOption1("WETH")}
-                      value="0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
-                    >
-                      WETH
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      onClick={() => setOption1("USDC")}
-                      value="0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
-                    >
-                      USDC
-                    </a>
-                  </li>
-                </ul>
-              </div>
+              <TokenModal
+                onSelectToken={(token) => setOption1(token)}
+                side="from"
+              />
             </div>
             <div className="p-2 text-xl bg-primary-color rounded">
               <MdSwapVert />
             </div>
-            <div className="bg-dark-primary rounded px-4 py-2">
+            <div className="bg-dark-primary rounded px-4 py-2 flex">
               <input
                 className="bg-dark-primary text-xl py-3 px-4 focus:outline-none"
                 type="number"
                 placeholder="0.0"
                 min="0"
                 step="0.01"
-                value={
-                  !valueExchanged
-                    ? ""
-                    : (valueExchanged / valueExchangedDecimals).toFixed(5)
-                }
+                value={!valueExchanged ? "" : valueExchanged}
                 disabled={true}
               />
-              <div className="dropdown dropdown-bottom">
-                <label tabIndex={0} className="btn m-1">
-                  {option2}
-                </label>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-                >
-                  <li>
-                    <a
-                      onClick={() => setOption2("WETH")}
-                      value="0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
-                    >
-                      WETH
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      onClick={() => setOption2("USDC")}
-                      value="0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
-                    >
-                      USDC
-                    </a>
-                  </li>
-                </ul>
-              </div>
+              <TokenModal
+                onSelectToken={(token) => setOption2(token)}
+                side="to"
+              />
             </div>
             <div className="w-full flex flex-col items-stretch">
-              <Button>
-                <p className="w-full">Convert Now</p>
+              <Button onClick={trySwap} disabled={!!currentAccount}>
+                <p className="w-full">Swap</p>
               </Button>
             </div>
           </div>
