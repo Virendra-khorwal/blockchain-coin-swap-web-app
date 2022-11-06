@@ -1,7 +1,7 @@
 import CoinCard from "./CoinCard";
 
 const CoinList = ({filteredCoins}) => {
-    return <div className="h-[700px] overflow-y-scroll scrollbar-hide">
+    return <div className="h-[440px] overflow-y-scroll scrollbar-hide">
         {
             filteredCoins.map(coin => {
                 return <CoinCard 

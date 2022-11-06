@@ -33,7 +33,7 @@ const Stat = () => {
   };
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-[500px]">
       <Head>
         <title>Blockchain App - Stat</title>
       </Head>

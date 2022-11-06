@@ -14,6 +14,7 @@ import {
 import { Line } from "react-chartjs-2";
 import useAxios from "../hooks/useAxios";
 import moment from "moment";
+import { useRouter } from "next/router";
 
 ChartJS.register(
   CategoryScale,
@@ -26,7 +27,9 @@ ChartJS.register(
   Legend
 );
 
-const CoinChart = ({ id }) => {
+const CoinChart = () => {
+  const router = useRouter()
+  const {id} = router.query
   const { response } = useAxios(
     `coins/${id.toLowerCase()}/market_chart?vs_currency=usd&days=7`
   );
