@@ -32,7 +32,6 @@ const CoinChart = ({id}) => {
     `coins/${id}/market_chart?vs_currency=usd&days=7`
   );
 
-  console.log(response);
   if (!response) {
     return (
       <div> 
