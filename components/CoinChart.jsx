@@ -27,9 +27,7 @@ ChartJS.register(
   Legend
 );
 
-const CoinChart = () => {
-  const router = useRouter()
-  const {id} = router.query
+const CoinChart = ({id}) => {
   const { response } = useAxios(
     `coins/${id}/market_chart?vs_currency=usd&days=7`
   );

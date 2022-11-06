@@ -33,7 +33,7 @@ const Coin = () => {
           Go Back
         </button>
       </div>
-      <main className="flex gap-y-4 flex-col">
+      <main className="flex gap-y-4 flex-col w-[800px]">
         <div className="flex items-center gap-x-4 ">
           <img className="w-16" src={response.image.large} alt={response.name} />
           <h1 className="text-6xl text-white">
