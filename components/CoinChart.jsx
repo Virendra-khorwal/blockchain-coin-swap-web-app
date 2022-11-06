@@ -31,7 +31,7 @@ const CoinChart = () => {
   const router = useRouter()
   const {id} = router.query
   const { response } = useAxios(
-    `coins/${id.toLowerCase()}/market_chart?vs_currency=usd&days=7`
+    `coins/${id}/market_chart?vs_currency=usd&days=7`
   );
 
   console.log(response);
