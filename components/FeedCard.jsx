@@ -8,7 +8,7 @@ const FeedCard = ({ name, id, symbol, image, price, priceChange }) => {
         <img className="w-20 2xl:w-14 xl:w-12 xl:h-12" src={image} alt={name} />
         <div className="flex gap-x-4 flex-col justify-center">
           <h1 className="text-xl xl:text-lg">{name}</h1>
-          <div className="flex justify-between gap-x-6 xl:gap-x-4">
+          <div className="flex flex-col justify-between gap-x-6 xl:gap-x-4">
             <p className="w-20">$ {price}</p>
             <p className={`${priceChange < 0 ? "text-[red]" : "text-[green]"}`}>
               {priceChange} %

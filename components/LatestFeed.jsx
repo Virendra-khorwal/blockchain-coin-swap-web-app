@@ -23,7 +23,7 @@ const LatestFeed = () => {
       <h1 className="text-xl text-left mb-4 font-bold text-white">
         Top 20 Trending
       </h1>
-      <div className="grid grid-cols-5 overflow-y-scroll scrollbar-hide 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 h-[320px] gap-2 ">
+      <div className="grid grid-cols-5 overflow-y-scroll scrollbar-hide 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 h-[200px] gap-2 ">
         {response.map((coin) => (
           <FeedCard
             key={coin.id}
