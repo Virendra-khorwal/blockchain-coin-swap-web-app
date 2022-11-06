@@ -13,12 +13,12 @@ const Sidebar = () => {
   const active = router.pathname;
 
   return (
-    <div className="h-screen bg-dark-secondary text-white flex flex-col justify-between items-center py-6 w-32">
+    <div className="h-screen bg-dark-secondary text-white flex flex-col justify-between items-center py-6 w-32 sm:w-16">
       <div className="cursor-pointer">
         <Image src={logo} alt="Logo" />
       </div>
-      <div className="text-3xl">
-        <ul className="flex flex-col gap-y-10 ">
+      <div className="text-3xl sm:text-sm">
+        <ul className="flex flex-col gap-y-10 sm:gap-y-2 ">
           <li>
             <Link href="/">
               <div
@@ -37,7 +37,7 @@ const Sidebar = () => {
             <Link href="/swap">
               <div
                 className={`${
-                  active === "/swap/*"
+                  active === "/swap"
                     ? "bg-primary-color"
                     : "hover:text-primary-color active:bg-primary-color active:text-white"
                 } p-3 rounded cursor-pointer tooltip tooltip-right`}
@@ -92,7 +92,7 @@ const Sidebar = () => {
           </li>
         </ul>
       </div>
-      <div className="text-3xl">
+      <div className="text-3xl sm:text-sm">
         <ul className="flex flex-col gap-y-10">
           <li className="p-3 rounded cursor-pointer">
             <div className="tooltip tooltip-right" data-tip="setting">

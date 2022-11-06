@@ -10,14 +10,14 @@ const Navbar = () => {
       const router = useRouter();
 
     return (
-      <div className="py-6 px-10 flex justify-between">
+      <div className="py-6 px-10 flex justify-between sm:px-2 ">
         <div>
           {/* <input
             className="bg-dark-secondary rounded text-xl py-2 px-4 text-white w-96 focus:outline focus:outline-primary-color focus:outline-2"
             placeholder="Search"
           /> */}
         </div>
-        <div className="text-white flex gap-x-10">
+        <div className="text-white flex gap-x-10 sm:gap-x-2">
           {currentAccount ? (
             <button
               className="bg-dark-secondary rounded flex items-center px-4 gap-x-3 cursor-pointer"
