@@ -1,4 +1,4 @@
-import Link from 'next/Link'
+import Link from 'next/link'
 const FeedCard = ({ name, id, symbol, image, price, priceChange }) => {
   console.log(name);
 
