@@ -1,17 +1,29 @@
 import Head from "next/head";
 import CoinChart from "../../components/CoinChart";
 import { useRouter } from "next/router";
+import useAxios from "../../hooks/useAxios";
+import { Player } from "@lottiefiles/react-lottie-player";
+import loadingAnimation from "../../asset/lottie/loading.json";
 
-const Coin = ({ coin }) => {
+const Coin = () => {
 
   const router = useRouter();
   const { id } = router.query;
+  const { response } = useAxios(`coins/${id}`);
+
+  if (!response) {
+    return (
+      <div>
+        <Player className="w-32" src={loadingAnimation} autoplay loop />
+      </div>
+    );
+  }
 
 
   return (
     <div className="flex flex-col gap-y-6 w-5/6">
       <Head>
-        <title>Stat - {coin.name}</title>
+        <title>Stat - {response.name}</title>
       </Head>
       <div>
         <button
@@ -23,9 +35,9 @@ const Coin = ({ coin }) => {
       </div>
       <main className="flex gap-y-4 flex-col">
         <div className="flex items-center gap-x-4 ">
-          <img className="w-16" src={coin.image.large} alt={coin.name} />
+          <img className="w-16" src={response.image.large} alt={response.name} />
           <h1 className="text-6xl text-white">
-            {coin.name} ({coin.symbol})
+            {response.name} ({response.symbol})
           </h1>
         </div>
         <div>
