@@ -35,7 +35,8 @@ const Stat = () => {
   return (
     <div className="w-full h-[500px]">
       <Head>
-        <title>Blockchain App - Stat</title>
+        <title>Exaverse - Stat</title>
+        <link rel="icon" href="./icon.ico" />
       </Head>
       <main>
         <div className="flex justify-between">
@@ -56,7 +57,9 @@ const Stat = () => {
         <div className="flex gap-x-8 mt-4">
           <button
             disabled={pageNumber === 1}
-            className={`bg-dark-secondary py-2 px-4 rounded hover:text-primary-color ${pageNumber===1 && 'cursor-not-allowed hover:text-white'}`}
+            className={`bg-dark-secondary py-2 px-4 rounded hover:text-primary-color ${
+              pageNumber === 1 && "cursor-not-allowed hover:text-white"
+            }`}
             onClick={() => setPageNumber((prevState) => prevState - 1)}
           >
             Previous
