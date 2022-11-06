@@ -37,7 +37,7 @@ const Sidebar = () => {
             <Link href="/swap">
               <div
                 className={`${
-                  active === "/swap"
+                  active === "/swap/*"
                     ? "bg-primary-color"
                     : "hover:text-primary-color active:bg-primary-color active:text-white"
                 } p-3 rounded cursor-pointer tooltip tooltip-right`}

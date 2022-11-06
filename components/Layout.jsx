@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
       </div>
       <div className="flex-1 flex flex-col">
         <Navbar />
-        <div className="flex-1 flex  px-10 py-6">{children}</div>
+        <div className="flex-1 flex  px-10 py-6 overflow-hidden">{children}</div>
       </div>
     </div>
   );

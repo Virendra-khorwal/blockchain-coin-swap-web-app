@@ -7,7 +7,7 @@ import loadingAnimation from "../asset/lottie/loading.json";
 
 const TokenModal = ({side}) => {
   const [tokenList, setTokenList] = useState([]);
-  const selectToken = {};
+  const [selectToken, setSelectToken] = useState([]);
   const isSelected = !!selectToken;
   const onOpenSelectModal = async () => {
     const tokenList = await tokenListApi();

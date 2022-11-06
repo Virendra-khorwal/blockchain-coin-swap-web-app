@@ -12,10 +12,10 @@ const Navbar = () => {
     return (
       <div className="py-6 px-10 flex justify-between">
         <div>
-          <input
+          {/* <input
             className="bg-dark-secondary rounded text-xl py-2 px-4 text-white w-96 focus:outline focus:outline-primary-color focus:outline-2"
             placeholder="Search"
-          />
+          /> */}
         </div>
         <div className="text-white flex gap-x-10">
           {currentAccount ? (
