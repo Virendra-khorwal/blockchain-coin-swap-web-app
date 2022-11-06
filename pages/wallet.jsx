@@ -37,7 +37,7 @@ const Wallet = () => {
   return (
     <div>
       <Head>
-        <title>Wallet</title>
+        <title>Exaverse - Wallet</title>
       </Head>
       <main className="text-white">
         <h1 className="text-2xl font-bold mb-10">My Wallet</h1>
