@@ -21,8 +21,11 @@ const Swap = () => {
 
   const [value, setValue] = useState();
   const [valueExchanged, setValueExchanged] = useState("");
-  const [option1, setOption1] = useState("Select");
-  const [option2, setOption2] = useState("Select");
+  const [options, setOptions] = useState({
+    "from" : [],
+    "to" : []
+  });
+  const [option2, setOption2] = useState();
   const [estimatedGasValue, setEstimatedGasValue] = useState();
 
   function changeToToken(e) {
@@ -97,6 +100,8 @@ const Swap = () => {
 
   };
 
+  console.log(options)
+
   return (
     <div className="flex flex-1 items-center justify-center flex-col text-white">
       <Head>
@@ -120,8 +125,14 @@ const Swap = () => {
                 onChange={(e) => changeValue(e)}
               />
               <TokenModal
-                onSelectToken={(token) => setOption1(token)}
+                onSelectToken={(token) =>
+                  setOptions((prevState) => ({
+                    ...prevState,
+                    from: token,
+                  }))
+                }
                 side="from"
+                selectedToken={options}
               />
             </div>
             <div className="p-2 text-xl bg-primary-color rounded">
@@ -138,7 +149,12 @@ const Swap = () => {
                 disabled={true}
               />
               <TokenModal
-                onSelectToken={(token) => setOption2(token)}
+                onSelectToken={(token) =>
+                  setOptions((prevState) => ({
+                    ...prevState,
+                    "to": token,
+                  }))
+                }
                 side="to"
               />
             </div>

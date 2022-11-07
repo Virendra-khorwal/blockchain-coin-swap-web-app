@@ -5,7 +5,7 @@ import TokenModalItem from "./TokenModalItem";
 import { Player } from "@lottiefiles/react-lottie-player";
 import loadingAnimation from "../asset/lottie/loading.json";
 
-const TokenModal = ({side}) => {
+const TokenModal = ({side, onSelectToken , selectedToken}) => {
   const [tokenList, setTokenList] = useState([]);
   const [selectToken, setSelectToken] = useState([]);
   const isSelected = !!selectToken;
@@ -14,18 +14,17 @@ const TokenModal = ({side}) => {
     setTokenList(tokenList);
   };
   // #FIX ADD token icon and name swaping feature
-
-  console.log(selectToken);
+  console.log(side)
 
   return (
     <div>
       {/* The button to open modal */}
       <button onClick={onOpenSelectModal}>
         <label htmlFor="my-modal-3" className="btn w-32">
-          {isSelected ? (
+          { selectedToken >0 && selectedToken[side] > 0 ? (
             <div className="flex items-center gap-x-2 truncate">
-              <img src={selectToken.logoURI} alt="Logo" />
-              <h1>{selectToken.symbol}</h1>
+              <img src={selectToken[side].logoURI} alt="Logo" />
+              <h1>{selectToken[side].symbol}</h1>
             </div>
           ) : (
             "Select Token"
@@ -54,10 +53,11 @@ const TokenModal = ({side}) => {
           ) : (
             <div className="h-72 overflow-y-scroll scrollbar-hide">
               {tokenList.map((token) => (
+             
                 <TokenModalItem
                   key={token.address}
                   token={token}
-                  onClick={() => (selectToken[side] = token)}
+                  onClick={() => onSelectToken(token)}
                 />
               ))}
             </div>
